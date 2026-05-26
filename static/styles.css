@@ -171,7 +171,9 @@ button, select, textarea {
 
 .editor-shell {
   position: relative;
+  display: grid;
   min-height: 72vh;
+  max-height: 72vh;
   border-radius: 24px;
   overflow: hidden;
   background: #020617;
@@ -179,6 +181,8 @@ button, select, textarea {
 }
 
 .editor-textarea {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   padding: 22px;
@@ -188,12 +192,72 @@ button, select, textarea {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.98rem;
   line-height: 1.65;
-  background: #020617;
-  color: #f8fafc;
+  background: transparent;
+  color: transparent;
+  caret-color: #f8fafc;
+  z-index: 10;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .editor-textarea::selection {
   background: rgba(56, 189, 248, 0.28);
+}
+
+.code-display {
+  position: relative;
+  padding: 22px;
+  margin: 0;
+  height: 100%;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  background: #020617;
+  color: #f8fafc;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.code-display code {
+  display: block;
+  width: 100%;
+}
+
+.keyword {
+  color: #9d4edd;
+}
+
+.string {
+  color: #26d07c;
+}
+
+.number {
+  color: #ff9f43;
+}
+
+.comment {
+  color: #7c8da6;
+  font-style: italic;
+}
+
+.function {
+  color: #00d4ff;
+}
+
+.tag {
+  color: #ff6b6b;
+}
+
+.attribute {
+  color: #a8dadc;
+}
+
+.operator {
+  color: #e2e8f0;
 }
 
 .overlay {
