@@ -12,7 +12,8 @@ RUN go build -o /usr/local/bin/codeshare main.go hub.go
 FROM alpine:latest
 RUN apk add --no-cache ca-certificates
 COPY --from=builder /usr/local/bin/codeshare /usr/local/bin/codeshare
-COPY templates /app/templates
+COPY --from=builder /app/templates /app/templates
+COPY --from=builder /app/static /app/static
 WORKDIR /app
 EXPOSE 8080
 ENV ADDR=:8080
