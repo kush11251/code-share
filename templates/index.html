@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Share</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <script>window.ROOM_ID = '{{.RoomID}}';</script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="hero panel">
+      <div class="hero-header">
+        <span class="hero-eyebrow">Live collaboration</span>
+        <h1 class="hero-title">Room <span class="accent">{{.RoomID}}</span></h1>
+        <p class="hero-copy">Editors start read-only until a lock is acquired. Use the control buttons to own the room and format code instantly.</p>
+      </div>
+      <div class="hero-actions">
+        <button id="takeControlBtn" class="button button-primary">Take Control</button>
+        <button id="formatBtn" class="button button-secondary">Format Code</button>
+        <button id="copyBtn" class="button button-secondary">Copy Room Link</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="editor-panel panel">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="label">Language</div>
+            <select id="languageSelect" class="select">
+              <option value="javascript">JavaScript</option>
+              <option value="python">Python</option>
+              <option value="go">Go</option>
+              <option value="html">HTML</option>
+              <option value="css">CSS</option>
+            </select>
+          </div>
+          <div class="toolbar-right">
+            <div class="status-card">
+              <div class="label">Status</div>
+              <div id="statusText" class="meta-value">Connecting...</div>
+            </div>
+            <div class="status-card">
+              <div class="label">Connection</div>
+              <div id="connectionText" class="meta-value">Offline</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-shell">
+          <textarea id="editor" class="editor-textarea" spellcheck="false">// Start typing shared code here...
+</textarea>
+          <div id="lockOverlay" class="overlay hidden">
+            <strong>Read-only mode</strong>
+            <div>Locked by another user</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h2 class="card-title">Room info</h2>
+          <div class="meta-row"><span>Room</span><span>{{.RoomID}}</span></div>
+          <div class="meta-row"><span>Session</span><span id="clientToken">...</span></div>
+          <div class="meta-row"><span>WebSocket</span><span id="wsState">offline</span></div>
+          <div class="meta-row"><span>Lock holder</span><span id="lockHolder">None</span></div>
+          <div class="meta-row"><span>Code size</span><span id="codeSize">0 chars</span></div>
+        </div>
+
+        <div class="card">
+          <h2 class="card-title">Controls</h2>
+          <button id="themeBtn" class="button button-secondary">Toggle Theme</button>
+          <button id="reconnectBtn" class="button button-secondary">Reconnect WS</button>
+        </div>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast"></div>
+  </div>
+</body>
+</html>
