@@ -1,13 +1,13 @@
 # Code Share
 
-A lightweight real-time code sharing and collaboration app built with Go, Redis, HTMX, Alpine.js, Tailwind CSS, and Monaco Editor.
+A lightweight real-time code sharing and collaboration app built with Go, Redis, Docker, and a simple local JavaScript frontend.
 
 ## Features
 
 - Instant unique room URLs with Redis-backed session records
 - Pessimistic locking so only one user edits at a time
-- Monaco Editor with multi-language support
-- HTMX-powered formatting endpoint with native error handling
+- Live room control, shared text updates, and code formatting
+- Works with local Docker Compose and Render-managed Redis
 
 ## Run locally
 
@@ -21,7 +21,32 @@ A lightweight real-time code sharing and collaboration app built with Go, Redis,
 
 ## Redis
 
-The app connects to Redis at `localhost:6379` by default. Change the address with `REDIS_ADDR`.
+The app supports Redis using either:
+
+- `REDIS_ADDR` = `host:port`
+- `REDIS_HOST` + `REDIS_PORT`
+- `REDIS_URL` = `redis://...`
+- `REDIS_PASSWORD` for password-protected Redis
+
+For Docker Compose, the app already uses:
+
+```yaml
+REDIS_ADDR=redis:6379
+```
+
+For Render managed Redis, set:
+
+```bash
+REDIS_HOST=${REDIS_HOST}
+REDIS_PORT=${REDIS_PORT}
+REDIS_PASSWORD=${REDIS_PASSWORD}
+```
+
+Or simply set:
+
+```bash
+REDIS_URL=redis://:<password>@<host>:<port>
+```
 
 ## Project files
 

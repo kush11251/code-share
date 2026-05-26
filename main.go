@@ -20,10 +20,8 @@ var redisClient *redis.Client
 var hub *Hub
 
 func main() {
-	redisAddr := getEnv("REDIS_ADDR", "localhost:6379")
-	redisClient = redis.NewClient(&redis.Options{
-		Addr: redisAddr,
-	})
+	redisOptions := getRedisOptions()
+	redisClient = redis.NewClient(redisOptions)
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
@@ -56,6 +54,31 @@ func getEnv(key, fallback string) string {
 		return val
 	}
 	return fallback
+}
+
+func getRedisOptions() *redis.Options {
+	if url := os.Getenv("REDIS_URL"); url != "" {
+		opts, err := redis.ParseURL(url)
+		if err == nil {
+			return opts
+		}
+	}
+
+	host := os.Getenv("REDIS_HOST")
+	port := os.Getenv("REDIS_PORT")
+	password := os.Getenv("REDIS_PASSWORD")
+	if host == "" {
+		host = "localhost"
+	}
+	if port == "" {
+		port = "6379"
+	}
+
+	return &redis.Options{
+		Addr:     host + ":" + port,
+		Password: password,
+		DB:       0,
+	}
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
