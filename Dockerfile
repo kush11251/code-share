@@ -14,6 +14,7 @@ RUN apk add --no-cache ca-certificates
 COPY --from=builder /usr/local/bin/codeshare /usr/local/bin/codeshare
 COPY --from=builder /app/templates /app/templates
 COPY --from=builder /app/static /app/static
+COPY --from=builder /app/assets /app/assets
 WORKDIR /app
 EXPOSE 8080
 ENV ADDR=:8080

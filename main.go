@@ -37,6 +37,7 @@ func main() {
 	mux.HandleFunc("/ws/", wsHandler)
 	mux.HandleFunc("/format", formatHandler)
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 
 	addr := getEnv("ADDR", "")
 	if addr == "" {
